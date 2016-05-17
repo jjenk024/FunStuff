@@ -25,8 +25,8 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
 				<ul class="nav navbar-nav">
-					<li id="listBtn" class="active"><a  href="#" onClick="listView()">List View</a></li>
-					<li id="tileBtn"><a  href="#" onClick="tileView()">Tile View</a></li>
+					<li id="listBtn" ng-class="viewSwap? 'active' : ''"><a  href="#" ng-click="viewSwap=true;">List View</a></li>
+					<li id="tileBtn" ng-class="viewSwap? '' : 'active'"><a  href="#" ng-click="viewSwap=false;">Tile View</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 				<li class="aabb">
@@ -37,16 +37,16 @@
 					  </div>
 					</form>
 				</li>
-				<li class="aabb"><a href="#" ng-click="add()">Add Contact</a></li>
+				<li class="aabb"><a href="#" ng-click="contactAdd=true;">Add Contact</a></li>
 				</ul>
 			</div>	
 		</div>		
-	</nav>
+	</nav> {{contactAdd}}
 	<div class="container top-buffer">
 		<div class="jumbotron  clearfix">
-		<div id="listView" >
+		<div id="listView" ng-show="viewSwap">
 			<div id="listView" ng-repeat="contact in dir.contacts | filter: filter.name" >
-				<div class="row panel" ng-click="open(contact.id)" data-toggle="#SingleView">
+				<div class="row panel" ng-click="open(contact.id)">
                     <div id="contact{{contact.id}}" class="panel-body" >
                         <img class="rounded-x" src="{{contact.avatar}}" alt="{{contact.name}}" >
                         <strong class="h4">{{contact.name}}</strong>       
@@ -54,7 +54,7 @@
 				</div>
 			</div></div>
 			
-			<div id="tileView" class="hidden">
+			<div id="tileView" ng-hide="viewSwap">
 			<div  ng-repeat="contact2 in dir.contacts | filter: filter.name" >
 				<div id="tileView" class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-click="open(contact2.id)">
 					<div class="hovereffect">
@@ -68,7 +68,7 @@
 		</div>
 		
 		<!--MODAL FOR SINGLE VIEW-->
-		<div class="modal fade" id="ViewContact" role="dialog">
+		<div class="modal fade" id="ViewContact" role="dialog" ng-show="contactView">
 			<div class="modal-dialog">
 			  <div class="modal-content">
 				<div class="modal-header">
@@ -98,11 +98,11 @@
 		</div>
 		
 		<!--MODAL FOR ADD CONTACT-->
-		<div class="modal fade" id="AddContact" role="dialog">
+		<div class="modal fade" id="AddContact" role="dialog" aria-hidden="false" style="display: block;" ng-show="contactAdd">
 			<div class="modal-dialog">
 			  <div class="modal-content">
 				<div class="modal-header">
-				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <button type="button" class="close" ng-click="contactAdd=false;">&times;</button>
 				  <strong class="h3">New Contact</strong>
 				</div>
 				<div class="modal-body">

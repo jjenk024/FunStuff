@@ -7,6 +7,11 @@ app.controller('dir',function ($scope, $http,$localStorage){
 		$scope.dir = data.data;
 		$scope.avatarLink = $scope.dir.contacts[0].avatar.substring(0, $scope.dir.contacts[0].avatar.length - 1);
 		
+		$scope.viewSwap = true;
+		$scope.contactView = true;
+		$scope.contactAdd = true;
+		$scope.contactUpdate = true;
+		
 		$scope.open = function(id){
 			var person = $scope.dir.contacts.filter(function(val,index,array){
 				return val.id == id;
@@ -36,7 +41,7 @@ app.controller('dir',function ($scope, $http,$localStorage){
 			};
 			
 			$scope.dir['contacts'].push(newContact);
-			$("#AddContact").modal('hide');
+			$scope.contactAdd = false;
 			
 			$scope.newName="";
 			$scope.newNumber="";
@@ -59,21 +64,6 @@ app.controller('dir',function ($scope, $http,$localStorage){
 		}
 	});
 });
-
-	
-	function listView(){
-		$("#tileBtn").removeClass("active");
-		$("#listBtn").addClass("active");
-		$("#listView").removeClass("hidden");
-		$("#tileView").addClass("hidden");
-	}
-	
-	function tileView(){		
-		$("#listBtn").removeClass("active");
-		$("#tileBtn").addClass("active");
-		$("#tileView").removeClass("hidden");
-		$("#listView").addClass("hidden");
-	}
 	
 	$('.has-clear input[type="text"]').on('input propertychange', function() {
   var $this = $(this);
